@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: kindlepreneur
+      POSTGRES_USER: kp
+      POSTGRES_PASSWORD: devpassword
+    ports: ['5432:5432']
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kp -d kindlepreneur"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  
+  redis:
+    image: redis:7-alpine
+    ports: ['6379:6379']
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+  
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports: ['8000:8000']
+    env_file: .env
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    volumes: ['./apps/api:/app', './storage:/storage']
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  
+  worker:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    env_file: .env
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    volumes: ['./apps/api:/app', './storage:/storage']
+    command: python -m arq workers.worker.WorkerSettings
+
+volumes:
+  postgres_data:
