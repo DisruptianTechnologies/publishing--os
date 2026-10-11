@@ -107,11 +107,14 @@ def assist_chapter_draft(action: str, text: str) -> dict[str, Any]:
     """
     metrics_before = calculate_readability(text)
 
-    if action == "polish_active_voice":
+    if action in ("polish_active_voice", "polish_tropes"):
         polished = text
+        tropes_removed = []
         for trope in AI_TROPES:
             pattern = re.compile(re.escape(trope), re.IGNORECASE)
-            polished = pattern.sub("", polished)
+            if pattern.search(polished):
+                tropes_removed.append(trope)
+                polished = pattern.sub("", polished)
         polished = re.sub(r"\s{2,}", " ", polished).strip()
         
         # Add punchy rhythm
@@ -119,7 +122,9 @@ def assist_chapter_draft(action: str, text: str) -> dict[str, Any]:
             "action": action,
             "original_text": text,
             "improved_text": polished,
-            "changes_summary": f"Removed {len(metrics_before['trope_flags'])} AI cliché tropes. Tightened sentence cadence.",
+            "polished_text": polished,
+            "tropes_removed": tropes_removed,
+            "changes_summary": f"Removed {len(tropes_removed)} AI cliché tropes. Tightened sentence cadence.",
             "metrics_before": metrics_before,
             "metrics_after": calculate_readability(polished),
         }
@@ -136,12 +141,13 @@ def assist_chapter_draft(action: str, text: str) -> dict[str, Any]:
             "action": action,
             "original_text": text,
             "improved_text": expanded,
+            "case_study": expanded,
             "changes_summary": "Appended historical case study anchor (Poincaré immersion-rest cycle).",
             "metrics_before": metrics_before,
             "metrics_after": calculate_readability(expanded),
         }
 
-    elif action == "run_editorial_qa":
+    elif action in ("run_editorial_qa", "editorial_critique"):
         findings = []
         if metrics_before["flesch_score"] < 65:
             findings.append("Readability is dense. Shorten compound sentences in opening paragraph.")
@@ -159,6 +165,7 @@ def assist_chapter_draft(action: str, text: str) -> dict[str, Any]:
             "findings": findings,
             "is_publication_ready": len(findings) <= 1 and not metrics_before["trope_flags"],
             "metrics": metrics_before,
+            "flesch_score": metrics_before["flesch_score"],
         }
 
     else:

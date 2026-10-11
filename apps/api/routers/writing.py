@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/v1/projects", tags=["writing"])
 
 
 class AssistRequest(BaseModel):
-    action: Literal["polish_active_voice", "expand_case_study", "run_editorial_qa"]
+    action: Literal["polish_active_voice", "polish_tropes", "expand_case_study", "run_editorial_qa", "editorial_critique"]
     text: str
 
 

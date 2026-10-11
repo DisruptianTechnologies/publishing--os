@@ -1,7 +1,7 @@
 'use client';
 import { useState, use } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Settings, FileText, CheckSquare, Brain, Activity, Clock, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Play, Settings, FileText, CheckSquare, Brain, Activity, Clock, CheckCircle, Search, Target, PenTool } from 'lucide-react';
 
 const STAGES = [
   { id: 'research', label: 'Research', icon: Search },
@@ -10,7 +10,6 @@ const STAGES = [
   { id: 'writing', label: 'Writing', icon: PenTool },
   { id: 'editing', label: 'Editing', icon: CheckCircle },
 ];
-import { Search, Target, PenTool } from 'lucide-react';
 
 export default function ProjectDashboard({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);

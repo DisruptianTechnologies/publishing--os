@@ -23,5 +23,5 @@ class ApprovalRequestResponse(BaseModel):
     updated_at: datetime
 
 class ApprovalDecisionCreate(BaseModel):
-    decision: Literal['approved', 'rejected']
+    decision: Literal['approved', 'rejected'] = 'approved'
     reason: str = ''

@@ -67,7 +67,8 @@ async def export_manuscript(
     """
     Directly streams or downloads the compiled EPUB or PDF file.
     """
-    from services.compilation_service import generate_epub3_archive, generate_print_pdf_6x9, SAMPLE_PROJECT_CHAPTERS
+    from services.compilation_service import generate_epub3_archive, generate_print_pdf_6x9
+    from services.chapter_service import SAMPLE_PROJECT_CHAPTERS
     
     # Use sample chapters for compilation download
     chapters = [{"title": ch["title"], "content": ch["content"]} for ch in SAMPLE_PROJECT_CHAPTERS]
