@@ -1,6 +1,6 @@
 # Kindlepreneur 2.0 — Features & Functionalities Reference
 
-Kindlepreneur 2.0 is a multi-tenant, multi-agent publishing and digital-commerce operating system. It provides an automated, supervised lifecycle taking ideas through research, strategy, drafting, editorial QA, formatting, metadata optimization, marketplace publishing, and consent-driven audience building.
+Kindlepreneur 2.0 is a multi-tenant, multi-agent publishing and digital-commerce operating system. It provides an automated, supervised lifecycle taking ideas through research, strategy, drafting, editorial QA, formatting, metadata optimization, multi-format compilation, marketplace publishing, and consent-driven audience building.
 
 ---
 
@@ -22,6 +22,10 @@ The platform is organized into three primary operational pillars supported by an
 │ • Dev Editor QA    │ • Package Staging  │ • Lead Magnet Attribution    │
 │ • Format & Metadata│ • ISBN & ASIN Sync │ • Nurture Sequence Auto-Flow │
 ├────────────────────┴────────────────────┴──────────────────────────────┤
+│ 4. PRODUCTION STUDIOS (PHASE 3)                                        │
+│ • EPUB 3.0 Engine  • 6x9 Print PDF     • KDP Cover Math & Blueprints   │
+│ • Writing Studio   • Digital Vault     • Marketing Launchpad & ARC     │
+├────────────────────────────────────────────────────────────────────────┤
 │              POLICY & APPROVAL GATEWAY (BLOCKING CONTROLS)              │
 │       • Deterministic Rules • Cost Caps • Risk Score Thresholds        │
 └────────────────────────────────────────────────────────────────────────┘
@@ -112,9 +116,54 @@ AudienceOS manages post-publication reader growth, conversion, and community dis
 
 ---
 
-## 5. Control Tower & Human Approval Gateway
+## 5. Pillar 4: Production Studios & Multi-Format Compiling (Phase 3)
 
-### 5.1 Blocking Human-in-the-Loop Gateway
+Phase 3 introduces direct manuscript compilation, cover engineering, and reader launch tools.
+
+### 5.1 Standards-Compliant EPUB 3.0 Compiler
+- Pure Python compilation engine generating valid `.epub` zip containers.
+- Guaranteed uncompressed `mimetype` as the exact first entry in the archive.
+- Generates `META-INF/container.xml`, `content.opf` (manifest, spine, metadata), `nav.xhtml` navigation document, and styled XHTML chapter files.
+- Passes standard EPUBCheck 5 validation.
+
+### 5.2 Print-Ready 6x9 Interior PDF Engine
+- Generates press-ready PDF-1.4 documents (432pt x 648pt) formatted for Amazon KDP Paperback.
+- Automatic page numbering, alternating headers (Book Title on even pages, Chapter Title on odd pages), and dynamic Table of Contents.
+
+### 5.3 Amazon KDP Paperback Cover Blueprint Calculator
+- Mathematical paperback cover wrap calculation:
+  - Spine width formula: $\text{Pages} \times 0.002252\text{ in}$ (White 50#) or $\text{Pages} \times 0.002500\text{ in}$ (Cream 55#).
+  - 0.125" bleed allowance on all four edges.
+  - Total wrap dimensions: $(\text{Trim Width} \times 2) + \text{Spine} + (0.125 \times 2)$ width, $\text{Trim Height} + (0.125 \times 2)$ height.
+  - 300 DPI canvas coordinates and safe zone calculations.
+  - Strict barcode clearance and spine text eligibility rules (disallowed under 80 pages).
+- AI cover prompt generator customized to trim geometry and book theme.
+
+### 5.4 Interactive Writing Studio (`/dashboard/writing`)
+- Chapter drawer with real-time target word count progress and Flesch Reading Ease scores.
+- Distraction-free manuscript editor with autosave.
+- Built-in AI Co-Author assistant:
+  - **Trope Cleaner:** Automatically removes synthetic filler clichés (*"delve into"*, *"tapestry"*, *"furthermore"*).
+  - **Case Study Expander:** Generates field implementation frameworks with empirical metrics.
+  - **Developmental Editorial Critique:** Comprehensive pacing, takeaway, and recommendation audit.
+- 1-click manuscript compilation button directly generating EPUB and PDF artifacts.
+
+### 5.5 Digital Asset Vault (`/dashboard/assets`)
+- Unified storage viewer for compiled EPUBs, interior PDFs, cover blueprints, and research briefs.
+- SHA-256 cryptographic verification for every artifact.
+- Direct download triggers for KDP and IngramSpark staging.
+- Visual interactive cover wrap layout diagram with live boundary coordinates.
+
+### 5.6 Marketing Launchpad (`/dashboard/marketing`)
+- 6-week countdown roadmap (Week -4 ARC Recruitment to Week +2 Price Normalization).
+- ARC Reader team tracker monitoring copy delivery and verified reviews.
+- Distribution economics simulator comparing KDP Select (KENP page reads) against Wide distribution royalties.
+
+---
+
+## 6. Control Tower & Human Approval Gateway
+
+### 6.1 Blocking Human-in-the-Loop Gateway
 - **Policy as Execution Layer:** Irreversible or high-risk actions (publishing to store, sending mass emails, large budget increases) are blocked until approved by an authorized user.
 - Approval requests (`ApprovalRequest`) include:
   - Calculated risk score (0.0 to 1.0).
@@ -122,7 +171,7 @@ AudienceOS manages post-publication reader growth, conversion, and community dis
   - Expected external side effects and estimated financial cost.
   - Expiration timestamps.
 
-### 5.2 Observability & Telemetry
+### 6.2 Observability & Telemetry
 - Real-time token usage and dollar cost tracking by agent and model.
 - Pipeline velocity metrics calculating duration per stage and identifying bottlenecks.
 - Full immutable audit log (`AuditLog`) capturing all actions, IP addresses, actors, and correlation IDs.

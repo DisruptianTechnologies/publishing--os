@@ -17,6 +17,8 @@ from routers.tasks import router as tasks_router
 from routers.analytics import router as analytics_router
 from routers.marketplace import router as marketplace_router
 from routers.audience import router as audience_router
+from routers.compilation import router as compilation_router
+from routers.writing import router as writing_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -52,6 +54,8 @@ app.include_router(tasks_router)
 app.include_router(analytics_router)
 app.include_router(marketplace_router)
 app.include_router(audience_router)
+app.include_router(compilation_router)
+app.include_router(writing_router)
 
 @app.get("/health")
 async def health():
