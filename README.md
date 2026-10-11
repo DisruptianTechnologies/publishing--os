@@ -7,7 +7,7 @@
 [![Next.js](https://img.shields.io/badge/Next.js-15.3.4-black.svg)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.1-38bdf8.svg)](https://tailwindcss.com)
-[![Tests](https://img.shields.io/badge/pytest-24%2F24%20passing-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/pytest-32%2F32%20passing-brightgreen.svg)]()
 [![Status](https://img.shields.io/badge/Phase-Phase%203%20Complete-success.svg)]()
 
 ---
@@ -152,7 +152,7 @@ Complete guides are located in the [`docs/`](./docs) directory:
 Verify system stability with the built-in test commands:
 
 ```bash
-# 1. Backend automated test suite (24 tests)
+# 1. Backend automated test suite (32 tests)
 cd apps/api
 python -m pytest tests -v
 
